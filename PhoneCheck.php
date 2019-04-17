@@ -166,7 +166,6 @@ class PhoneCheck
                 {
                     $sep = array_search($first_value, $ret);
                 } else {
-                    logWarning('手机号和固话之前请用单个逗号或者分号分隔', self::$logKey, $str);
                     throw new \InvalidArgumentException('手机号和固话之前请用单个逗号或者分号分隔！', 101300);
                 }
             } else {
@@ -183,7 +182,6 @@ class PhoneCheck
 
         if (\count($arr) > 2)
         {
-            logWarning('请不要输入超过两个的联系方式', self::$logKey, $str);
             throw new \InvalidArgumentException('请不要输入超过两个的联系方式！', 101301);
         }
 
@@ -196,7 +194,6 @@ class PhoneCheck
         }
 
         if (!($data['tel'] || $data['mobile'])) {
-            logWarning('请输入正确的联系方式!', self::$logKey, $str);
             throw new \InvalidArgumentException('请输入正确的联系方式！', 101302);
         }
 
@@ -206,6 +203,7 @@ class PhoneCheck
 
     static public function match(string $str, string $city = ''):array
     {
+        $str = trim($str);
         $data = [];
         $first_c = $str[0];
         $three_c = substr($str, 0, 3);
@@ -287,7 +285,6 @@ class PhoneCheck
         $code = substr($tel, 0, $code_n);
         $number_n = self::$telRules[$code] ?? 0;
         if (!\in_array($number_n, [7, 8])) {
-            logWarning($code . ' not exist', self::$logKey, $tel);
             throw new \InvalidArgumentException('不存在此电话区号，请核对！', 101303);
         }
         $number = substr($tel, $code_n, $number_n);
@@ -296,7 +293,6 @@ class PhoneCheck
 
         if (strlen($tel) < $code_number) {
             $msg = '区号' . $code . '下固话是' . $number_n . '位，' . $tel . '不符合规则！';
-            logWarning($msg, self::$logKey, $tel);
             throw new \InvalidArgumentException($msg, 101304);
 
         }
