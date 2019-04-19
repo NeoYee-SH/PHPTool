@@ -177,3 +177,16 @@ Array
     [mobile] => 13142587758
 )
 ```
+
+样例10 假如对从通讯录中复制过来的联系方式的支持:
+```php
+$str1 = "(0376) 803 9551; 13478946254‬‬";
+try
+{
+    $ret = PhoneCheck::analysis($str1);
+} catch (InvalidArgumentException  $e)
+{
+    $ret = $e;
+}
+print_r($ret);
+```
