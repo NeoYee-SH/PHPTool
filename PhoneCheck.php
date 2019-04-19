@@ -150,7 +150,7 @@ class PhoneCheck
         ];
         $arr = [];
 
-        //尝试针对通讯录复制过来的不可见字符进行过滤
+        $str = self::dbc2Sbc($str);
         $str = preg_replace(self::$hiddenUnicode, '', $str);
 
         if (strlen($str) < 18)
@@ -158,7 +158,6 @@ class PhoneCheck
             $arr[] = $str;
         }
         else {
-
             preg_match_all(self::$segmentChar, $str, $matches);
             $match = $matches[0] ?? [];
             if ($match)
@@ -311,4 +310,32 @@ class PhoneCheck
         $corp = preg_replace("/[^\d]/", '', $corp);
         return chunk_split(substr($corp, 0, 6), 3, "-") . substr($corp, 6);
     }
+
+    static private function dbc2Sbc(string $str):string {
+        $dbc = array(
+            '－' , '　' , '：' , '．' , '，' , '／' , '％' , '＃' , '！' , '＠' ,
+            '＆' , '（' , '）' , '＜' , '＞' , '＂' , '＇' , '？' , '［' , '］' ,
+            '｛' , '｝' , '＼' , '｜' , '＋' , '＝' , '＿' , '＾' , '￥' , '￣' ,
+            '｀'
+        );
+
+        $sbc = array( //半角
+            '-', ' ', ':', '.', ',', '/', '%', ' #', '!', '@',
+            '&', '(', ')', '<', '>', '"', '\'','?', '[', ']',
+            '{', '}', '\\', '|', '+', '=', '_', '^', '￥','~',
+            '`'
+
+        );
+
+        return str_replace( $dbc, $sbc, $str );
+    }
 }
+$tel = "（0376） 803 9551,13478946254‬‬";
+try
+{
+    $ret = PhoneCheck::analysis($tel);
+} catch (InvalidArgumentException  $e)
+{
+    $ret = $e->getMessage();
+}
+print_r($ret);
