@@ -330,12 +330,3 @@ class PhoneCheck
         return str_replace( $dbc, $sbc, $str );
     }
 }
-$tel = "（0376） 803 9551,13478946254‬‬";
-try
-{
-    $ret = PhoneCheck::analysis($tel);
-} catch (InvalidArgumentException  $e)
-{
-    $ret = $e->getMessage();
-}
-print_r($ret);
