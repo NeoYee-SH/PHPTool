@@ -6,7 +6,7 @@
  * Time: 11:23 AM
  */
 
-
+namespace code\phone_check;
 /**
  * Class PhoneCheck
  */

@@ -1,0 +1,27 @@
+#VS CODE
+.vscode/*
+
+#MacOS
+# General
+.DS_Store
+
+#IDEA
+.idea/
+
+#git
+.git/
+
+#sublime
+*.sublime-project
+*.sublime-workspace
+
+# rar 7z zip gz
+*.rar
+*.7z
+*.gz
+
+#temp files
+*.tmp
+
+# curl
+curl/
