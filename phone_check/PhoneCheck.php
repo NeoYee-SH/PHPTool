@@ -1266,6 +1266,11 @@ class PhoneCheck
         return $data;
     }
 
+    static public function matchCodeByCity(string $city):string
+    {
+        return self::$cityCode[$city] ?? '';
+    }
+    
     static private function hasMobile(string $str):string
     {
         $pattern = self::$mobilePattern;
